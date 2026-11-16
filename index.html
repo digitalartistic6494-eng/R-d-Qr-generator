@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f7f5">
+
+  <title>Secret Message QR</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="app.js" defer></script>
+</head>
+
+<body>
+
+  <main class="shell">
+
+    <header class="brand">
+      <div class="eyebrow">A PRIVATE LITTLE NOTE</div>
+      <h1>Secret Message QR</h1>
+      <p class="muted">
+        Create a little surprise, one scan at a time.
+      </p>
+    </header>
+
+    <!-- QR GENERATOR DASHBOARD -->
+
+    <section id="generatorView" class="panel">
+
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">YOUR DASHBOARD</div>
+          <h2>Create a message</h2>
+        </div>
+
+        <span class="count" id="messageCount">0 created</span>
+      </div>
+
+      <form id="messageForm">
+
+        <label for="messageTitle">
+          Message name
+          <span>(for your dashboard)</span>
+        </label>
+
+        <input
+          id="messageTitle"
+          maxlength="60"
+          placeholder="e.g. A little thank you"
+          autocomplete="off"
+        >
+
+        <label for="messageText">
+          Your message
+        </label>
+
+        <textarea
+          id="messageText"
+          rows="6"
+          maxlength="1800"
+          placeholder="Write your secret message here..."
+          required
+        ></textarea>
+
+        <button class="primary" type="submit">
+          GENERATE QR CODE
+        </button>
+
+        <p class="hint">
+          Each QR opens its own message page.
+          Keep a copy of your messages somewhere safe.
+        </p>
+
+      </form>
+
+      <div class="divider"></div>
+
+      <div class="section-heading list-heading">
+        <h2>Your QR codes</h2>
+
+        <button id="clearAll" class="text-button" type="button">
+          Clear list
+        </button>
+      </div>
+
+      <div id="emptyState" class="empty-state">
+        <div class="empty-icon">⌗</div>
+        <p>No QR codes yet.</p>
+        <span>Create your first secret message above.</span>
+      </div>
+
+      <div id="qrList" class="qr-list" aria-live="polite"></div>
+
+    </section>
+
+    <!-- MESSAGE VIEW FOR SCANNERS -->
+
+    <section id="messageView" class="panel message-panel" hidden>
+
+      <div class="eyebrow">A PRIVATE LITTLE NOTE</div>
+
+      <h2 id="viewerTitle">
+        A little secret is waiting for you.
+      </h2>
+
+      <p class="muted intro">
+        Some words are better discovered than read.
+      </p>
+
+      <button
+        id="revealButton"
+        class="primary reveal-button"
+        type="button"
+      >
+        REVEAL MESSAGE
+      </button>
+
+      <div
+        id="revealedMessage"
+        class="revealed-message"
+        hidden
+      ></div>
+
+      <div class="footer-note">
+        MADE JUST FOR YOU.
+      </div>
+
+      <a class="back-link" href="./">
+        Create your own QR
+      </a>
+
+    </section>
+
+    <footer>
+      Minimal notes. Meaningful moments.
+    </footer>
+
+  </main>
+
+</body>
+</html>
