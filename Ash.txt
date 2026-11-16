@@ -1,0 +1,457 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Bactolac | R&D QR Administration</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 30px 16px;
+  background: #f5f7f9;
+  color: #202b36;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.logo {
+  width: 55px;
+  height: 55px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #385b78;
+  color: white;
+  font-family: Georgia, serif;
+  font-size: 32px;
+}
+
+header h1 {
+  font-size: 22px;
+  letter-spacing: 2px;
+  margin: 15px 0 7px;
+}
+
+header p {
+  color: #77828d;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.panel {
+  background: white;
+  border: 1px solid #e5e9ed;
+  padding: 30px;
+}
+
+h2 {
+  font-family: Georgia, serif;
+  font-weight: normal;
+  font-size: 25px;
+}
+
+.subtitle {
+  color: #77828d;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+label {
+  display: block;
+  margin: 22px 0 8px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #dce1e5;
+  background: white;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #385b78;
+}
+
+button {
+  cursor: pointer;
+  padding: 14px 20px;
+  border: none;
+  background: #385b78;
+  color: white;
+  font-size: 11px;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #29455d;
+}
+
+.generate {
+  width: 100%;
+  margin-top: 22px;
+}
+
+.divider {
+  border: 0;
+  border-top: 1px solid #e5e9ed;
+  margin: 32px 0;
+}
+
+#empty {
+  text-align: center;
+  color: #999;
+  padding: 30px 10px;
+  border: 1px dashed #ddd;
+  font-size: 13px;
+}
+
+#results {
+  display: grid;
+  gap: 16px;
+}
+
+.qr-card {
+  border: 1px solid #e5e9ed;
+  padding: 18px;
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: 22px;
+  align-items: center;
+}
+
+.qr-image {
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+}
+
+.qr-image img,
+.qr-image canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+.qr-details {
+  min-width: 0;
+}
+
+.qr-details h3 {
+  font-family: Georgia, serif;
+  font-size: 19px;
+  font-weight: normal;
+  overflow-wrap: anywhere;
+}
+
+.qr-details p {
+  color: #77828d;
+  font-size: 12px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.secondary {
+  background: white;
+  color: #385b78;
+  border: 1px solid #385b78;
+}
+
+.status {
+  color: #77828d;
+  font-size: 11px;
+  line-height: 1.6;
+  margin-top: 14px;
+}
+
+footer {
+  text-align: center;
+  margin-top: 30px;
+  color: #999;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+@media(max-width: 520px) {
+  .panel { padding: 20px; }
+
+  .qr-card {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .actions { justify-content: center; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+  <div class="logo">B</div>
+  <h1>BACTOLAC PHARMACEUTICALS</h1>
+  <p>RESEARCH & DEVELOPMENT</p>
+  <p>QR MESSAGE ADMINISTRATION</p>
+</header>
+
+<section class="panel">
+
+  <h2>Create a new message</h2>
+
+  <p class="subtitle">
+    Internal R&D QR message creation dashboard.
+  </p>
+
+  <form id="form">
+
+    <label for="title">Message title</label>
+
+    <input
+      id="title"
+      maxlength="60"
+      placeholder="Enter message title"
+    >
+
+    <label for="message">Message content</label>
+
+    <textarea
+      id="message"
+      rows="6"
+      maxlength="200"
+      placeholder="Write your message here..."
+      required
+    ></textarea>
+
+    <button class="generate" type="submit">
+      GENERATE QR CODE
+    </button>
+
+  </form>
+
+  <hr class="divider">
+
+  <h2>Generated QR codes</h2>
+
+  <p class="subtitle">
+    Download each QR code individually.
+  </p>
+
+  <div id="empty">
+    No QR codes generated yet.
+  </div>
+
+  <div id="results"></div>
+
+  <p class="status">
+    Bactolac Pharmaceuticals | R&D Department
+  </p>
+
+</section>
+
+<footer>
+  INTERNAL QR CREATION TOOL
+</footer>
+
+</div>
+
+<script>
+
+// YOUR ACTUAL PUBLISHED WEBSITE
+
+const BASE_URL =
+"https://digitalartistic6494-eng.github.io/R-d-Qr-generator/";
+
+
+// CREATE UNIQUE MESSAGE LINK
+
+function createLink(title, message) {
+
+  const data = {
+    t: title,
+    m: message
+  };
+
+  const encoded = btoa(
+    unescape(
+      encodeURIComponent(JSON.stringify(data))
+    )
+  );
+
+  return BASE_URL + "#note=" +
+    encodeURIComponent(encoded);
+
+}
+
+
+// GENERATE QR CODE
+
+document.getElementById("form")
+.addEventListener("submit", function(event) {
+
+  event.preventDefault();
+
+  if (typeof QRCode === "undefined") {
+    alert("QR library not loaded. Check internet.");
+    return;
+  }
+
+  const title =
+    document.getElementById("title").value.trim()
+    || "R&D Message";
+
+  const message =
+    document.getElementById("message").value.trim();
+
+  if (!message) {
+    alert("Please enter a message.");
+    return;
+  }
+
+  if (message.length > 200) {
+    alert("Maximum message length is 200 characters.");
+    return;
+  }
+
+  const url = createLink(title, message);
+
+  const card = document.createElement("div");
+  card.className = "qr-card";
+
+  const image = document.createElement("div");
+  image.className = "qr-image";
+
+  const details = document.createElement("div");
+  details.className = "qr-details";
+
+  const heading = document.createElement("h3");
+  heading.textContent = title;
+
+  const description = document.createElement("p");
+  description.textContent = message;
+
+  const actions = document.createElement("div");
+  actions.className = "actions";
+
+
+  // DOWNLOAD QR
+
+  const download = document.createElement("button");
+  download.textContent = "DOWNLOAD QR";
+
+  download.addEventListener("click", function() {
+
+    const canvas = image.querySelector("canvas");
+
+    if (!canvas) {
+      alert("QR code is not ready.");
+      return;
+    }
+
+    const link = document.createElement("a");
+
+    link.download = "Bactolac-RD-QR.png";
+
+    link.href = canvas.toDataURL("image/png");
+
+    link.click();
+
+  });
+
+
+  // COPY MESSAGE LINK
+
+  const copy = document.createElement("button");
+
+  copy.textContent = "COPY LINK";
+  copy.className = "secondary";
+
+  copy.addEventListener("click", async function() {
+
+    try {
+
+      await navigator.clipboard.writeText(url);
+
+      copy.textContent = "COPIED!";
+
+    } catch {
+
+      prompt("Copy this message URL:", url);
+
+    }
+
+  });
+
+
+  // CREATE QR IMAGE
+
+  new QRCode(image, {
+
+    text: url,
+
+    width: 280,
+    height: 280,
+
+    colorDark: "#000000",
+    colorLight: "#ffffff",
+
+    correctLevel: QRCode.CorrectLevel.H
+
+  });
+
+
+  actions.append(download, copy);
+
+  details.append(heading, description, actions);
+
+  card.append(image, details);
+
+  document.getElementById("results").prepend(card);
+
+  document.getElementById("empty").style.display = "none";
+
+  document.getElementById("form").reset();
+
+});
+
+</script>
+
+</body>
+</html>
